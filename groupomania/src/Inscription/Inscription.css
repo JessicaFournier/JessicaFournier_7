@@ -1,0 +1,36 @@
+.Inscription-form {
+    text-align: center;
+    width: 800px;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    justify-content: center;
+    margin: 0 auto;
+}
+
+.Inscription-input {
+    margin: 10px;
+    border: solid 1px;
+    border-radius: 5px;
+    padding: 10px 5px;
+}
+
+.Inscription-file {
+    margin: 10px;
+    padding: 10px 5px;
+}
+
+.Inscription-label{
+    margin: 10px;
+    padding: 10px 5px;
+}
+
+.Submit-form {
+    background-color: #041333;
+    color: #ffffff;
+    border: solid 1px #041333;
+    border-radius: 8px;
+    margin: 20px 40px;
+    padding: 10px 15px;
+    font-size: 20px;
+    font-weight: bold;
+}

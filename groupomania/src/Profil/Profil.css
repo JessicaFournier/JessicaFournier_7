@@ -1,0 +1,14 @@
+.Photo-profil{
+    width: 200px;
+}
+
+.Profil-bloc {
+    display: grid;
+    width: 1000px;
+    grid-template-columns: repeat(2, 500px);
+    margin: 40px auto;
+}
+
+.Profil-p {
+    text-align: left;
+}
