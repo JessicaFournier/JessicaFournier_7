@@ -1,9 +1,49 @@
 .Discussion-text {
-    border: solid 1px #041333;
+    border: solid 2px #041333;
     border-radius: 8px;
     color: #041333;
+    text-align: center;
+    margin: 20px 20px;
 }
 
 .Icon-color {
     color: #041333;
+}
+
+.Discussion-link {
+    width: 500px;
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    border:solid 1px #041333;
+    border-radius: 8px;
+    margin: 20px auto;
+    padding: 20px 0;
+    text-decoration: none;
+    color: #041333;
+    font-weight: bold;
+}
+
+.Discussion-create-title {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.Discussion-create-bloc {
+    border: solid 1px #041333;
+    border-radius: 8px;
+    color: #041333;
+    text-align: center;
+    width: 500px;
+    margin: 10px auto;
+}
+
+@media screen and (max-width: 768px)
+{
+    .Discussion-link {
+        width: 300px;
+    }
+
+    .Discussion-create-bloc {
+        width: 300px;
+    }
 }

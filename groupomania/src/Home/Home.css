@@ -1,3 +1,7 @@
+.Body {
+  text-align: center;
+}
+
 
 .Home-button {
     background-color: #041333;
@@ -17,3 +21,11 @@
     color: #041333;
     margin: 40px;
   }
+
+  @media screen and (max-width: 768px) 
+{
+  .Home-button {
+    display: block;
+    margin: 20px auto;
+  }
+}

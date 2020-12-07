@@ -1,14 +1,68 @@
+.Page-bloc {
+    display: grid;
+    grid-template-columns: 320px 1080px;
+    text-align: center;
+    margin-right: 20px;
+}
+
+.Profil {
+    text-align: center;
+}
+
+.Profil-img{
+    border: solid 1px #041333;
+    border-radius: 8px;
+    padding: 20px 20px;
+    object-fit: cover;
+}
+
 .Photo-profil{
     width: 200px;
+    padding-bottom: 20px;
 }
 
 .Profil-bloc {
     display: grid;
     width: 1000px;
-    grid-template-columns: repeat(2, 500px);
+    grid-template-columns: 300px 500px;
     margin: 40px auto;
+}
+
+.Profil-text{
+    padding-left: 40px;
 }
 
 .Profil-p {
     text-align: left;
+    padding-bottom: 20px;
+    font-size: 20px;
+}
+
+@media screen and (max-width: 768px) 
+{
+    .Page-bloc {
+        grid-template-columns: repeat(1,1fr);
+        margin: 0;
+    }
+
+    .Profil-bloc {
+        grid-template-columns: repeat(1,1fr);
+        width: 100%;
+    }
+
+    .Profil-img {
+        margin: 0 20px;
+    }
+}
+
+@media screen and (min-width:769px) and (max-width: 1024px)
+{
+    .Page-bloc {
+        grid-template-columns: 300px 1fr;
+        margin-right: 0;
+    }
+
+    .Profil-img {
+        margin: 0 20px;
+    }
 }

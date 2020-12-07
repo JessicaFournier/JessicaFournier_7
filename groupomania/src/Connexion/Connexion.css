@@ -1,0 +1,13 @@
+.Connect-form {
+    text-align: center;
+}
+
+@media screen and (max-width: 768px)
+{
+    .Connect-form {
+        display: grid;
+        grid-template-columns: repeat(1, 1fr);
+        text-align: left;
+        margin: 20px 0;
+    }
+}

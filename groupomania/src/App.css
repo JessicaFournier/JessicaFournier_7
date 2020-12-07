@@ -1,19 +1,36 @@
-.App {
-  text-align: center;
-}
 
 .App-logo {
-  height: 40vmin;
+  height: 70px;
   pointer-events: none;
 }
 
 .App-header {
   background-color: #041333;
-  height: 200px;
-  display: flex;
-  flex-direction: column;
+  height: 150px;
+  display: grid;
+  grid-template-columns: repeat(2,1fr);
   align-items: center;
   justify-content: center;
   font-size: calc(10px + 2vmin);
   color: white;
+  padding-left: 20px;
+}
+
+.App-accueil {
+  text-decoration: none;
+  color: #ffffff;
+  text-align: right;
+  padding-right: 40px;
+  padding-bottom: 10px
+}
+
+@media screen and (max-width: 768px) 
+{
+  .App-logo{
+    height: 40px;
+  }
+
+  .App-header {
+    height: 100px;
+  }
 }

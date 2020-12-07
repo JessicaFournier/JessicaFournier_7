@@ -6,7 +6,7 @@ import './Home.css'
 class Home extends Component {
   render() {
     return (
-        <div>
+        <div className="Body">
             <h1>Bienvenue sur le réseau social de Groupomania</h1>
             <Link className='Home-button' to={'/Inscription'}>Je m'inscris</Link>
             <Link className='Home-button' to={'/Connexion'}>Je me connecte</Link>

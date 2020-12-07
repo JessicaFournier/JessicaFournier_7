@@ -1,8 +1,12 @@
-.Inscription-form {
+.Inscription {
     text-align: center;
-    width: 800px;
+    margin-top: 40px;
+}
+
+.Inscription-form {
+    text-align: left;
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: 170px 600px;
     justify-content: center;
     margin: 0 auto;
 }
@@ -33,4 +37,24 @@
     padding: 10px 15px;
     font-size: 20px;
     font-weight: bold;
+}
+
+@media screen and (max-width: 768px)
+{
+    .Inscription-form {
+        grid-template-columns: repeat(1, 1fr);
+    }
+
+    .Inscription-label {
+        padding: 0;
+        margin : 0 20px;
+    }
+
+    .Inscription-file {
+        margin: 10px 20px;
+    }
+
+    .Inscription-input {
+        margin: 10px 20px;
+    }
 }
