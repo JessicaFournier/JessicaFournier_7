@@ -13,7 +13,7 @@
     font-style: italic;
     position: absolute;
     top: 0;
-    left: 10px;
+    left: 40px;
 }
 
 .Message-date{
@@ -32,16 +32,22 @@
 .Icon1 {
     position: absolute;
     bottom: 5px;
-    right: 50px;
+    right: 65px;
 }
 
 .Icon2 {
     position: absolute;
     bottom: 5px;
-    right: 25px;
+    right: 55px;
 }
 
 .Icon3 {
+    position: absolute;
+    bottom: 5px;
+    right: 25px;
+}
+
+.Icon4 {
     position: absolute;
     bottom: 5px;
     right: 0px;
@@ -83,6 +89,33 @@
     padding: 20px 20px;
 }
 
+.Submit-message {
+    display: block;
+    margin: 20px auto;
+}
+
+.Create-label {
+    margin: 20px auto;
+}
+
+.Create-input {
+    margin: 60px auto;
+}
+
+.Photo-message {
+    overflow: hidden;
+    border-radius: 50px;
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+    position: absolute;
+    top: -15px;
+    left: -15px;
+}
+
+.Message-text-p {
+    margin-top: 30px;
+}
 @media screen and (max-width: 768px)
 {
     .Message-create-bloc {

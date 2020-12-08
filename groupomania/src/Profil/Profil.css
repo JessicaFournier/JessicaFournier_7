@@ -1,6 +1,6 @@
 .Page-bloc {
     display: grid;
-    grid-template-columns: 320px 1080px;
+    grid-template-columns: 320px 1fr;
     text-align: center;
     margin-right: 20px;
 }
@@ -14,6 +14,7 @@
     border-radius: 8px;
     padding: 20px 20px;
     object-fit: cover;
+    margin-left: 10px;
 }
 
 .Photo-profil{
@@ -23,9 +24,8 @@
 
 .Profil-bloc {
     display: grid;
-    width: 1000px;
-    grid-template-columns: 300px 500px;
-    margin: 40px auto;
+    grid-template-columns: 300px 200px;
+    margin: 40px auto 10px auto;
 }
 
 .Profil-text{
@@ -35,6 +35,32 @@
 .Profil-p {
     text-align: left;
     padding-bottom: 20px;
+    font-size: 20px;
+}
+
+.Profil-upload {
+    display: block;
+    margin: 20px auto;
+    cursor: pointer;
+    border: solid 1px #041333;
+    border-radius: 8px;
+    background-color: #041333;
+    color: #fff;
+    padding: 10px 20px;
+    text-align: center;
+    font-weight: bold;
+}
+
+.Profil-delete {
+    cursor: pointer;
+    margin: 10px;
+    border: solid 1px #041333;
+    border-radius: 8px;
+    background-color: #041333;
+    color: #fff;
+    padding: 15px;
+    text-align: center;
+    font-weight: bold;
     font-size: 20px;
 }
 

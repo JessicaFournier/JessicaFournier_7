@@ -22,7 +22,8 @@ class Message extends Component {
         comments: [],
         name:'',
         firstName:'',
-        selectedFile: null
+        selectedFile: null,
+        liked: null
       };
       
       this.handleMessageChange = this.handleMessageChange.bind(this);
@@ -32,6 +33,7 @@ class Message extends Component {
       this.handleCommentClick = this.handleCommentClick.bind(this);
       this.handleCommentAffichClick = this.handleCommentAffichClick.bind(this);
       this.handleDeleteCommentClick = this.handleDeleteCommentClick.bind(this);
+      this.handleLikeClick = this.handleLikeClick.bind(this);
       
     }
     
@@ -126,8 +128,27 @@ class Message extends Component {
     }
 
     //fonction pour compter le nombre de j'aime
-    handleLikeClick() {
-
+    handleLikeClick(id, e) {
+      e.preventDefault();
+      let discussionId = this.props.match.params.id;
+      let messageId = id;
+      let objetPost = {
+        message_id: id
+      }
+      fetch('http://localhost:5000/api/discussion/'+ discussionId +'/message/'+ messageId +'/like', {
+        method: 'POST',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + localStorage.getItem("token")
+        },
+        body: JSON.stringify(objetPost)
+        }).then(function(response) {
+            return response.json();
+        }).catch(err => {
+            console.log('err', err);
+            alert("Serveur non disponible");
+        })
     }
 
     //fonction pour appeler l'input de commentaire
@@ -143,7 +164,7 @@ class Message extends Component {
       this.setState({commentaire: event.target.value});
     }
 
-    //fonctioin pour soumettre le commentaire
+    //fonction pour soumettre le commentaire
     handleCommentSubmit(e){
       e.preventDefault();
       let discussionId = this.props.match.params.id;
@@ -235,9 +256,7 @@ class Message extends Component {
             <p className="Comment-text">
               <p className="Message-autor">Auteur : {comment.name} {comment.firstName} - Date : <Moment format="DD/MM/YYYY hh:mm:ss">{comment.date}</Moment> </p>
               <p>{comment.text_comment}</p>
-              <FontAwesomeIcon className="Icon-bloc Icon1"  /*onClick={() => handleLikeClick(message.id)}*/ icon={faHeart} />
-              <FontAwesomeIcon className="Icon-bloc Icon2" onClick={() => this.handleCommentClick(comment.id)} icon={faPen} />
-              <FontAwesomeIcon className="Icon-bloc Icon3" onClick={(e) => this.handleDeleteCommentClick(comment.id, comment.message_id, e)} icon={faTrash} />
+              <FontAwesomeIcon className="Icon-bloc Icon4" onClick={(e) => this.handleDeleteCommentClick(comment.id, comment.message_id, e)} icon={faTrash} />
             </p>
           ))}
         </div>
@@ -256,15 +275,16 @@ class Message extends Component {
               <div>
                 {this.state.messages.map(message => (
                   <p >
-                    <p className="Message-text">
+                    <div className="Message-text">
+                      <img src={message.photo} className="Photo-message"/>
                       <p className="Message-autor">Auteur : {message.name} {message.firstName} - Date : <Moment format="DD/MM/YYYY hh:mm:ss">{message.date}</Moment> </p>
-                      <p>{message.text_message}</p>
+                      <p className="Message-text-p">{message.text_message}</p>
                       <img src={message.file} className="Photo-profil"/>
-                      <FontAwesomeIcon className="Icon-bloc Icon1"  /*onClick={() => handleLikeClick(message.id)}*/ icon={faHeart} />
-                      <FontAwesomeIcon className="Icon-bloc Icon2" onClick={() => this.handleCommentClick(message.id, message.name, message.firstName)} icon={faPen} />
-                      <FontAwesomeIcon className="Icon-bloc Icon3" onClick={(e) => this.handleDeleteClick(message.id, e)} icon={faTrash} />
+                      <FontAwesomeIcon className="Icon-bloc Icon1"  onClick={(e) => this.handleLikeClick(message.id, e)} icon={faHeart} /><p className="Icon-bloc Icon2">0</p>
+                      <FontAwesomeIcon className="Icon-bloc Icon3" onClick={() => this.handleCommentClick(message.id, message.name, message.firstName)} icon={faPen} />
+                      <FontAwesomeIcon className="Icon-bloc Icon4" onClick={(e) => this.handleDeleteClick(message.id, e)} icon={faTrash} />
                       <div onClick={()=> this.handleCommentAffichClick(message.id)}>Afficher les commentaires</div>
-                    </p>
+                    </div>
                     {comment}
                   </p>
                 ))}
@@ -276,7 +296,7 @@ class Message extends Component {
                   <label className="Create-label" for="title">Votre message : </label>
                   <input className="Create-input" type="text" id="title" value={this.state.value} onChange={this.handleMessageChange}/>
                   <input className="Profil-modif" type="file" accept="image/png, image/jpeg" onChange={this.handleFileChange}/>
-                  <input className="Inscription-input Submit-form" type="submit" value="Envoyer"/>
+                  <input className="Inscription-input Submit-form Submit-message" type="submit" value="Envoyer"/>
                 </form>
               </div>
             </div>

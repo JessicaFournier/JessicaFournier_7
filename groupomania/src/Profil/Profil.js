@@ -92,7 +92,7 @@ class Profil extends Component {
                             <img src={this.state.user.photo} className="Photo-profil" alt="profil"/>
                             <div>
                                 <input className="Profil-modif" type="file" accept="image/png, image/jpeg" onChange={this.handleFileChange}/>
-                                <button onClick={this.handleUploadFileClick}>Upload</button>
+                                <button className="Profil-upload" onClick={this.handleUploadFileClick}>Upload</button>
                             </div>
                         </div>
                         <div className="Profil-text">
@@ -100,8 +100,9 @@ class Profil extends Component {
                             <p className="Profil-p">Prénom : {this.state.user.firstName}</p>
                         </div>
                     </div>
+                    <button className="Profil-delete" onClick={this.handleDeleteProfileClick}>Supprimer mon compte</button>
                 </div>
-                <button onClick={this.handleDeleteProfileClick}>Supprimer mon compte</button>
+                
             </div>
         );
     }
