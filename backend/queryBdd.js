@@ -13,7 +13,6 @@ module.exports = {
     //récupération d'un utilisateur pour le login
     userLogin: function() {
         return 'SELECT * FROM User WHERE email = ? '
-    
     },
 
     //récupération d'un utilisateur pour le profil
@@ -170,5 +169,9 @@ module.exports = {
 
     fileMessageDeleteUser: function () {
         return 'SELECT file FROM Message WHERE user_id = ?'
-    }
+    },
+
+    selectIdFromUser: function() {
+        return 'SELECT id FROM User WHERE id=?'
+    },
 }

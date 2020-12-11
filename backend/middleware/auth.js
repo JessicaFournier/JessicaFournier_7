@@ -1,4 +1,6 @@
 const jwt = require('jsonwebtoken');
+const connection = require('../connexionDatabase');
+const queryDbb = require('../queryBdd');
 
 
 //middleware qui vérifie le token de l'utilisateur
@@ -28,18 +30,10 @@ module.exports = (req, res, next) => {
         const userId = jwtToken.userId;
         const userIsAdmin = jwtToken.isAdmin;
 
-        const mysql = require('mysql');
-
-        const connection = mysql.createConnection({
-            host: process.env.DB_HOST,
-            user: process.env.DB_USER,
-            password: process.env.DB_PASS,
-            database:"groupomania"
-        });
 
         connection.connect();
 
-        const queryString = 'SELECT id FROM User WHERE id=?'
+        const queryString = queryDbb.selectIdFromUser()
         const insert = [userId]
         const user = connection.query(queryString, insert, (error, result, fields) => {
           if (error) {
@@ -51,7 +45,7 @@ module.exports = (req, res, next) => {
           }
         });
 
-        //On passe l'utilisateur dnas notre requete afin que celui-ci soit disponible pour les prochains middlewares
+        //On passe l'utilisateur dans notre requete afin que celui-ci soit disponible pour les prochains middlewares
         req.user = userId;
         req.userIsAdmin = userIsAdmin
 
