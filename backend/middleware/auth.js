@@ -30,9 +30,6 @@ module.exports = (req, res, next) => {
         const userId = jwtToken.userId;
         const userIsAdmin = jwtToken.isAdmin;
 
-
-        connection.connect();
-
         const queryString = queryDbb.selectIdFromUser()
         const insert = [userId]
         const user = connection.query(queryString, insert, (error, result, fields) => {
