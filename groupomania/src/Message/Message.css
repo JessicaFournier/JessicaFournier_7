@@ -32,13 +32,13 @@
 .Icon1 {
     position: absolute;
     bottom: 5px;
-    right: 65px;
+    right: 55px;
 }
 
 .Icon2 {
     position: absolute;
     bottom: 5px;
-    right: 55px;
+    right: 75px;
 }
 
 .Icon3 {
@@ -111,6 +111,8 @@
     position: absolute;
     top: -15px;
     left: -15px;
+    border: solid 1px #041333;
+    background-color: #fff;
 }
 
 .Message-text-p {

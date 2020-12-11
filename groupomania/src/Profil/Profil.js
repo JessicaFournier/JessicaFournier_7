@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import './Profil.css'
-import photoprofil from './bonhomme.png'
-import { Link, Redirect } from 'react-router-dom'
+import photoProfil from './bonhomme.png'
+import { Redirect } from 'react-router-dom'
 import Menu from '../Menu/Menu.js'
 
 class Profil extends Component {
@@ -54,6 +54,7 @@ class Profil extends Component {
             alert("Serveur non disponible");
         })
     }
+
     handleDeleteProfileClick(e) {
         e.preventDefault();
         const id = localStorage.getItem("userId")
@@ -68,9 +69,10 @@ class Profil extends Component {
             'Authorization': 'Bearer ' + localStorage.getItem("token")
         },
         body: JSON.stringify(objetPost)
-        }).then(function() {
+        }).then(() => {
             localStorage.clear();
             this.setState({ redirection: true })
+            alert('Profil supprimé')
         }).catch(err => {
             console.log('err', err);
             alert("Serveur non disponible");
@@ -82,6 +84,10 @@ class Profil extends Component {
         if (redirection) {
             return <Redirect to='/'/>
         }
+        let photo = photoProfil;
+        if (this.state.user.photo != null) {
+            photo = this.state.user.photo;
+        }
         return (
             <div className="Page-bloc">
                 < Menu />
@@ -89,7 +95,7 @@ class Profil extends Component {
                     <h2>Mon profil</h2>
                     <div className="Profil-bloc">
                         <div className="Profil-img">
-                            <img src={this.state.user.photo} className="Photo-profil" alt="profil"/>
+                            <img src={photo} className="Photo-profil" alt="profil"/>
                             <div>
                                 <input className="Profil-modif" type="file" accept="image/png, image/jpeg" onChange={this.handleFileChange}/>
                                 <button className="Profil-upload" onClick={this.handleUploadFileClick}>Upload</button>
@@ -102,7 +108,6 @@ class Profil extends Component {
                     </div>
                     <button className="Profil-delete" onClick={this.handleDeleteProfileClick}>Supprimer mon compte</button>
                 </div>
-                
             </div>
         );
     }

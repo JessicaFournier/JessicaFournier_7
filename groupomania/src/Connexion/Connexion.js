@@ -1,7 +1,7 @@
 import React from 'react';
 import './Connexion.css'
 
-import { Link, Redirect } from 'react-router-dom'
+import { Redirect } from 'react-router-dom'
 
 class Connexion extends React.Component {
     constructor(props) {
@@ -34,7 +34,6 @@ class Connexion extends React.Component {
             email: this.state.email,
             password: this.state.password,
         }
-        console.log(objetPost);
         e.preventDefault();
         fetch('http://localhost:5000/api/user/login', {
                 method: 'POST',

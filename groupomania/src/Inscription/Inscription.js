@@ -1,6 +1,6 @@
 import React from 'react';
 import './Inscription.css'
-import { Link, Redirect } from 'react-router-dom'
+import { Redirect } from 'react-router-dom'
 
 class Inscription extends React.Component {
     constructor(props) {
@@ -22,6 +22,17 @@ class Inscription extends React.Component {
         this.handleFileChange = this.handleFileChange.bind(this);
     }
 
+    resetForm() {
+        this.setState ({
+            name: '',
+            firstName: '',
+            email: '',
+            password: '',
+            redirection: false,
+            selectedFile: null
+        });
+    }
+
     handleNameChange(event) {
         this.setState({
             name: event.target.value
@@ -31,8 +42,6 @@ class Inscription extends React.Component {
     handleFirstNameChange(event){
         this.setState({
             firstName: event.target.value
-        }, () => {
-            console.log(this.state)
         });
     }
 
@@ -55,7 +64,11 @@ class Inscription extends React.Component {
 
     handleSubmit(e) {
         const data = new FormData()
-        data.append('file', this.state.selectedFile)
+
+        if (this.state.selectedFile != null) {
+            data.append('file', this.state.selectedFile)
+        }
+        
         data.append('name', this.state.name)
         data.append('firstName', this.state.firstName)
         data.append('email', this.state.email)
@@ -68,16 +81,21 @@ class Inscription extends React.Component {
                 },
                 body: data
             }).then((response) => {
-                return response.json();
-            }).then(() => {
-                this.setState({ redirection: true })
+                console.log(response)
+                if (response.status === 200) {
+                    this.setState({ redirection: true });
+                } else {
+                    return response.json()  
+                }
+            }).then(json => {
+                alert(json.error);
+                this.resetForm(); 
             }).catch(err => {
                 console.log('err', err);
                 alert("Serveur non disponible");
             })
     }
   
-
     render(){
         const { redirection } = this.state;
         if (redirection) {
@@ -102,7 +120,6 @@ class Inscription extends React.Component {
                 <input className="Inscription-input Submit-form" type="submit" value="Envoyer"/>
                 </form>
             </div>
-            
         );
     }
 }

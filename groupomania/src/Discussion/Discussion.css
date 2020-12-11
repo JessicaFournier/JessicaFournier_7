@@ -4,23 +4,33 @@
     color: #041333;
     text-align: center;
     margin: 20px 20px;
+    
 }
 
 .Icon-color {
     color: #041333;
 }
-
-.Discussion-link {
+.Discussion-bloc-link {
+    margin: 20px auto;
     width: 500px;
-    display: grid;
-    grid-template-columns: repeat(1, 1fr);
     border:solid 1px #041333;
     border-radius: 8px;
-    margin: 20px auto;
+    position: relative;
+}
+
+.Discussion-link {
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
     padding: 20px 0;
     text-decoration: none;
     color: #041333;
     font-weight: bold;
+}
+
+.Discussion-icon{
+    position: absolute;
+    bottom: 5px;
+    right: 5px;
 }
 
 .Discussion-create-title {
@@ -45,5 +55,9 @@
 
     .Discussion-create-bloc {
         width: 300px;
+    }
+
+    .Discussion-bloc-link {
+        width:300px;
     }
 }

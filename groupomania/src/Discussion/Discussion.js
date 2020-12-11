@@ -1,8 +1,9 @@
 import React, { Component } from 'react'
 import './Discussion.css'
-import { Link, useParams } from 'react-router-dom'
-import Message from '../Message/Message.js'
+import { Link } from 'react-router-dom'
 import Menu from '../Menu/Menu.js'
+import { faTrash } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 class Discussion extends Component {
     constructor(props){
@@ -13,9 +14,10 @@ class Discussion extends Component {
       };
       this.handleChange = this.handleChange.bind(this);
       this.handleSubmit = this.handleSubmit.bind(this);
+      this.handleDeleteClick = this.handleDeleteClick.bind(this);
     }
 
-    componentDidMount() {
+    loadDiscussions() {
       fetch('http://localhost:5000/api/discussion', {
         method: 'GET',
         headers: {
@@ -25,7 +27,15 @@ class Discussion extends Component {
         },
       })
       .then(response => response.json())     
-      .then(json => this.setState({discussions : json}));
+      .then(json => this.setState({discussions : json}))
+      .catch(err => {
+        console.log('err', err); 
+        alert("Serveur non disponible");
+      })
+    }
+
+    componentDidMount() {
+      this.loadDiscussions();
     } 
 
     handleChange(event) {
@@ -36,7 +46,6 @@ class Discussion extends Component {
       let objetPost = {
         title: this.state.value,
       }
-      console.log(objetPost);
       e.preventDefault();
       fetch('http://localhost:5000/api/discussion', {
             method: 'POST',
@@ -48,8 +57,34 @@ class Discussion extends Component {
             body: JSON.stringify(objetPost)
         }).then(function(response) {
             return response.json();
+        }).then(() => {
+          window.location.reload();
         }).catch(err => {
-            console.log('err', err);
+            console.log('err', err); 
+            alert("Serveur non disponible");
+        })
+    }
+
+    handleDeleteClick(id,e) {
+      e.preventDefault();
+      let discussionId = id
+      let objetPost = {
+        id: discussionId
+      }
+      fetch('http://localhost:5000/api/discussion/' + discussionId, {
+            method: 'DELETE',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + localStorage.getItem("token")
+            },
+            body: JSON.stringify(objetPost)
+        }).then(function(response) {
+            return response.json();
+        }).then(() => {
+          this.loadDiscussions();
+        }).catch(err => {
+            console.log('err', err); 
             alert("Serveur non disponible");
         })
     }
@@ -63,7 +98,11 @@ class Discussion extends Component {
               <div className="Discussion-bloc">
                   <div className="Discussion-text">
                       {this.state.discussions.map(discussion => (
-                        <Link className="Discussion-link" to={"/Discussion/" + discussion.id + '/' }>{discussion.title}</Link>
+                        <div className="Discussion-bloc-link">
+                          <Link className="Discussion-link" to={"/Discussion/" + discussion.id + '/' }>{discussion.title}</Link>
+                          <FontAwesomeIcon className="Discussion-icon" onClick={(e) => this.handleDeleteClick(discussion.id, e)} icon={faTrash} />
+                        </div>
+                        
                       ))}
                       <div className="Discussion-create-bloc">
                         <p className="Discussion-create-title">Créer une nouvelle discussion</p>

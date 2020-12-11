@@ -4,9 +4,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faHeart } from '@fortawesome/free-solid-svg-icons'
 import { faPen } from '@fortawesome/free-solid-svg-icons'
 import { faTrash } from '@fortawesome/free-solid-svg-icons'
-import { Link, useParams } from 'react-router-dom'
 import Menu from '../Menu/Menu.js'
 import Moment from 'react-moment';
+import photoProfil from '../Profil/bonhomme.png'
 
 class Message extends Component {
     constructor(props){
@@ -36,10 +36,8 @@ class Message extends Component {
       this.handleLikeClick = this.handleLikeClick.bind(this);
       
     }
-    
-    //recupération des messages de la discussion
-    componentDidMount() {
-      let discussionId = this.props.match.params.id;
+
+    loadMessages(discussionId) {
       fetch('http://localhost:5000/api/discussion/' + discussionId, {
         method: 'GET',
         headers: {
@@ -65,6 +63,12 @@ class Message extends Component {
           console.log('err', err);
           alert("Serveur non disponible");
       })
+    }
+    
+    //recupération des messages de la discussion
+    componentDidMount() {
+      let discussionId = this.props.match.params.id;
+      this.loadMessages(discussionId);
     } 
 
     //fonction de changement d'état de l'input de message
@@ -85,7 +89,10 @@ class Message extends Component {
       let discussionId = this.props.match.params.id;
       let data = new FormData();
       
-      data.append('file', this.state.selectedFile)
+      if (this.state.selectedFile != null) {
+        data.append('file', this.state.selectedFile)
+      }
+
       data.append('discussionId', this.props.match.params.id)
       data.append('text_message', this.state.message)
       fetch('http://localhost:5000/api/discussion/' + discussionId + '/message', {
@@ -96,6 +103,9 @@ class Message extends Component {
         body: data
         }).then(function(response) {
             return response.json();
+        }).then(() => {
+          let discussionId = this.props.match.params.id;
+          this.loadMessages(discussionId);
         }).catch(err => {
             console.log('err', err);
             alert("Serveur non disponible");
@@ -121,6 +131,11 @@ class Message extends Component {
         body: JSON.stringify(objetPost)
         }).then(function(response) {
             return response.json();
+        }).then(function(response) {
+            alert(response);
+        }).then(() => {
+          let discussionId = this.props.match.params.id;
+          this.loadMessages(discussionId);
         }).catch(err => {
             console.log('err', err);
             alert("Serveur non disponible");
@@ -145,6 +160,9 @@ class Message extends Component {
         body: JSON.stringify(objetPost)
         }).then(function(response) {
             return response.json();
+        }).then(() => {
+          let discussionId = this.props.match.params.id;
+          this.loadMessages(discussionId);
         }).catch(err => {
             console.log('err', err);
             alert("Serveur non disponible");
@@ -153,10 +171,12 @@ class Message extends Component {
 
     //fonction pour appeler l'input de commentaire
     handleCommentClick(id, name, firstName) {
-      this.setState({showCommentEntry: true});
-      this.setState({messageId: id});
-      this.setState({name : name});
-      this.setState({firstName: firstName});
+      this.setState({
+        showCommentEntry: true,
+        messageId: id,
+        name : name,
+        firstName: firstName
+      });
     }
 
     ////fonction de changement d'état de l'input de commentaire
@@ -183,6 +203,9 @@ class Message extends Component {
         body: JSON.stringify(objetPost)
         }).then(function(response) {
             return response.json();
+        }).then(() => {
+          let discussionId = this.props.match.params.id;
+          this.loadMessages(discussionId);
         }).catch(err => {
             console.log('err', err);
             alert("Serveur non disponible");
@@ -192,8 +215,12 @@ class Message extends Component {
     //fonction pour afficher un commentaire
     handleCommentAffichClick(id) {
       let discussionId = this.props.match.params.id;
-      this.setState({showComment: true});
       let messageId = id;
+      this.setState({
+        showComment: true,
+        messageId: id
+      });
+
       fetch('http://localhost:5000/api/discussion/' + discussionId + '/message/' + messageId +'/comment', {
           method: 'GET',
           headers: {
@@ -226,6 +253,11 @@ class Message extends Component {
         body: JSON.stringify(objetPost)
         }).then(function(response) {
             return response.json();
+        }).then(function(response) {
+            alert(response);
+        }).then(() => {
+          let discussionId = this.props.match.params.id;
+          this.loadMessages(discussionId);
         }).catch(err => {
             console.log('err', err);
             alert("Serveur non disponible");
@@ -251,13 +283,16 @@ class Message extends Component {
     let comment = null;
     if (this.state.showComment === true) {
       comment = (
-        <div className="Comment-bloc">
+        <div >
           {this.state.comments.map(comment => (
-            <p className="Comment-text">
-              <p className="Message-autor">Auteur : {comment.name} {comment.firstName} - Date : <Moment format="DD/MM/YYYY hh:mm:ss">{comment.date}</Moment> </p>
-              <p>{comment.text_comment}</p>
-              <FontAwesomeIcon className="Icon-bloc Icon4" onClick={(e) => this.handleDeleteCommentClick(comment.id, comment.message_id, e)} icon={faTrash} />
-            </p>
+            <div className="Comment-bloc">
+              <div className="Comment-text">
+                <img src={comment.photo ? comment.photo : photoProfil} className="Photo-message" alt={"photo de " + comment.name}/>
+                <p className="Message-autor">Auteur : {comment.name} {comment.firstName} - Date : <Moment format="DD/MM/YYYY hh:mm">{comment.date}</Moment> </p>
+                <p>{comment.text_comment}</p>
+                <FontAwesomeIcon className="Icon-bloc Icon4" onClick={(e) => this.handleDeleteCommentClick(comment.id, comment.message_id, e)} icon={faTrash} />
+              </div>
+            </div>
           ))}
         </div>
       )
@@ -274,19 +309,19 @@ class Message extends Component {
             <div>
               <div>
                 {this.state.messages.map(message => (
-                  <p >
+                  <div >
                     <div className="Message-text">
-                      <img src={message.photo} className="Photo-message"/>
-                      <p className="Message-autor">Auteur : {message.name} {message.firstName} - Date : <Moment format="DD/MM/YYYY hh:mm:ss">{message.date}</Moment> </p>
+                      <img src={message.photo ? message.photo : photoProfil} className="Photo-message" alt ={"photo de " + message.name}/>
+                      <p className="Message-autor">{this.state.messageId} Auteur : {message.name} {message.firstName} - Date : <Moment format="DD/MM/YYYY hh:mm">{message.date}</Moment> </p>
                       <p className="Message-text-p">{message.text_message}</p>
-                      <img src={message.file} className="Photo-profil"/>
-                      <FontAwesomeIcon className="Icon-bloc Icon1"  onClick={(e) => this.handleLikeClick(message.id, e)} icon={faHeart} /><p className="Icon-bloc Icon2">0</p>
+                      <img src={message.file} className="Photo-profil" alt=""/>
+                      <p className="Icon-bloc Icon2">{message.nbLike}</p><FontAwesomeIcon className="Icon-bloc Icon1"  onClick={(e) => this.handleLikeClick(message.id, e)} icon={faHeart} />
                       <FontAwesomeIcon className="Icon-bloc Icon3" onClick={() => this.handleCommentClick(message.id, message.name, message.firstName)} icon={faPen} />
                       <FontAwesomeIcon className="Icon-bloc Icon4" onClick={(e) => this.handleDeleteClick(message.id, e)} icon={faTrash} />
                       <div onClick={()=> this.handleCommentAffichClick(message.id)}>Afficher les commentaires</div>
                     </div>
-                    {comment}
-                  </p>
+                    {message.id === this.state.messageId ? comment : null}
+                  </div>
                 ))}
                 {commentEntry}
               </div>
