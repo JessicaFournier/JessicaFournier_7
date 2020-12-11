@@ -17,7 +17,8 @@ class Profil extends Component {
         this.handleDeleteProfileClick = this.handleDeleteProfileClick.bind(this);
     }
 
-    componentDidMount() {
+
+    loadProfil(){
         fetch('http://localhost:5000/api/user/profil', {
             method: 'GET',
             headers: {
@@ -28,6 +29,9 @@ class Profil extends Component {
         })
         .then(response => response.json())     
         .then(json => this.setState({user : json}));    
+    }
+    componentDidMount() {
+        this.loadProfil();
     }
 
     handleFileChange = event => {
@@ -49,6 +53,8 @@ class Profil extends Component {
         body: data
         }).then(function(response) {
             return response.json();
+        }).then(() => {
+            this.loadProfil();
         }).catch(err => {
             console.log('err', err);
             alert("Serveur non disponible");
