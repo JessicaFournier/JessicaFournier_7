@@ -312,8 +312,8 @@ class Message extends Component {
                   <div >
                     <div className="Message-text">
                       <img src={message.photo ? message.photo : photoProfil} className="Photo-message" alt ={"photo de " + message.name}/>
-                      <p className="Message-autor">{this.state.messageId} Auteur : {message.name} {message.firstName} - Date : <Moment format="DD/MM/YYYY hh:mm">{message.date}</Moment> </p>
-                      <p className="Message-text-p">{message.text_message}</p>
+                      <div className="Message-autor">Auteur : {message.name} {message.firstName} - Date : <Moment format="DD/MM/YYYY hh:mm">{message.date}</Moment> </div>
+                      <div className="Message-text-p">{message.text_message}</div>
                       <img src={message.file} className="Photo-profil" alt=""/>
                       <p className="Icon-bloc Icon2">{message.nbLike}</p><FontAwesomeIcon className="Icon-bloc Icon1"  onClick={(e) => this.handleLikeClick(message.id, e)} icon={faHeart} />
                       <FontAwesomeIcon className="Icon-bloc Icon3" onClick={() => this.handleCommentClick(message.id, message.name, message.firstName)} icon={faPen} />
