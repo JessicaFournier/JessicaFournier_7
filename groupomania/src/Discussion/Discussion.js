@@ -109,7 +109,7 @@ class Discussion extends Component {
                         <form className="Create-discussion" onSubmit={this.handleSubmit}>
                           <label className="Create-label" for="title">Titre de la discussion : </label>
                           <input className="Create-input" type="text" id="title" value={this.state.value} onChange={this.handleChange}/>
-                          <input className="Inscription-input Submit-form" type="submit" value="Envoyer"/>
+                          <input className="Inscription-input Submit-form Submit-discussion" type="submit" value="Envoyer"/>
                         </form>
                       </div>
                   </div>
