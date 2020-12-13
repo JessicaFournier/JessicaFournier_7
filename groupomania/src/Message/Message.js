@@ -273,7 +273,7 @@ class Message extends Component {
           <form className="Create-discussion" onSubmit={this.handleCommentSubmit}>
             <label className="Create-label" for="title">Vous répondez au message de : {this.state.name} {this.state.firstName}</label>
             <textarea rows={5} cols={30} className="Create-input" id="title" value={this.state.value} onChange={this.handleCommentChange}/>
-            <input className="Inscription-input Submit-form" type="submit" value="Envoyer"/>
+            <input className="Inscription-input Submit-form Submit-comment" type="submit" value="Envoyer"/>
           </form>
         </div>
       )
@@ -318,7 +318,7 @@ class Message extends Component {
                       <p className="Icon-bloc Icon2">{message.nbLike}</p><FontAwesomeIcon className="Icon-bloc Icon1"  onClick={(e) => this.handleLikeClick(message.id, e)} icon={faHeart} />
                       <FontAwesomeIcon className="Icon-bloc Icon3" onClick={() => this.handleCommentClick(message.id, message.name, message.firstName)} icon={faPen} />
                       <FontAwesomeIcon className="Icon-bloc Icon4" onClick={(e) => this.handleDeleteClick(message.id, e)} icon={faTrash} />
-                      <div onClick={()=> this.handleCommentAffichClick(message.id)}>Afficher les commentaires</div>
+                      <div className="Comment-affich" onClick={()=> this.handleCommentAffichClick(message.id)}>Afficher les commentaires</div>
                     </div>
                     {message.id === this.state.messageId ? comment : null}
                   </div>
@@ -330,7 +330,7 @@ class Message extends Component {
                 <form className="Create-discussion" onSubmit={this.handleMessageSubmit}>
                   <label className="Create-label" for="title">Votre message : </label>
                   <input className="Create-input" type="text" id="title" value={this.state.value} onChange={this.handleMessageChange}/>
-                  <input className="Profil-modif" type="file" accept="image/png, image/jpeg" onChange={this.handleFileChange}/>
+                  <input className="Profil-modif" type="file" accept="image/png, image/jpeg, image/gif" onChange={this.handleFileChange}/>
                   <input className="Inscription-input Submit-form Submit-message" type="submit" value="Envoyer"/>
                 </form>
               </div>
