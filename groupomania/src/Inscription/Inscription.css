@@ -28,6 +28,11 @@
     padding: 10px 5px;
 }
 
+.Inscription-request {
+    font-size: 12px;
+    font-style: italic;
+}
+
 .Submit-form {
     background-color: #041333;
     color: #ffffff;

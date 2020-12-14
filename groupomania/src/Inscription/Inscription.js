@@ -106,16 +106,18 @@ class Inscription extends React.Component {
                 <h2>Veuillez renseigner les champs suivants pour vous inscrire</h2>
                 <form onSubmit={this.handleSubmit}>
                     <div className="Inscription-form" >
-                        <label className="Inscription-label" for="nom">Nom : </label>
-                        <input className="Inscription-input" type="text" id="nom" value={this.state.name} onChange={this.handleNameChange}/>
-                        <label className="Inscription-label" for="prenom">Prénom : </label>
-                        <input className="Inscription-input" type="text" id="prenom" value={this.state.firstName} onChange={this.handleFirstNameChange}/>
-                        <label className="Inscription-label" for="email">Email : </label>
-                        <input className="Inscription-input" type="email" id="email" value={this.state.email} onChange={this.handleEmailChange}/>
-                        <label className="Inscription-label" for="password">Mot de passe : </label>
-                        <input className="Inscription-input" type="password" id="password" value={this.state.password} onChange={this.handlePasswordChange}/>
-                        <label className="Inscription-label" for="avatar">Photo de profil : </label>
+                        <label className="Inscription-label" for="nom">Nom* : </label>
+                        <input className="Inscription-input" type="text" id="nom" value={this.state.name} onChange={this.handleNameChange} placeholder="Dupont"/>
+                        <label className="Inscription-label" for="prenom">Prénom* : </label>
+                        <input className="Inscription-input" type="text" id="prenom" value={this.state.firstName} onChange={this.handleFirstNameChange} placeholder="Alain"/>
+                        <label className="Inscription-label" for="email">Email* : </label>
+                        <input className="Inscription-input" type="email" id="email" value={this.state.email} onChange={this.handleEmailChange} placeholder="alain.dupont@mail.com"/>
+                        <label className="Inscription-label" for="password">Mot de passe* : </label>
+                        <input className="Inscription-input" type="password" id="password" value={this.state.password} onChange={this.handlePasswordChange} placeholder="Entre 4 et 8 caractères, 1 majuscule, 1 minuscule, 1 chiffre"/>
+                        <label className="Inscription-label" for="avatar">Photo de profil** : </label>
                         <input className="Inscription-file" type="file" id="avatar" accept="image/png, image/jpeg"  onChange={this.handleFileChange}/>
+                        <p className="Inscription-request">* : champs obligatoires</p>
+                        <p className="Inscription-request">** : fichiers acceptés : .jpeg et .png</p>
                     </div>
                 <input className="Inscription-input Submit-form" type="submit" value="Envoyer"/>
                 </form>
