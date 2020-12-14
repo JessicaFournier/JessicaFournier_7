@@ -37,6 +37,15 @@ class Message extends Component {
       
     }
 
+    resetForm() {
+      this.fileInput.value = "";
+      this.setState ({
+        message: '',
+        value: '',
+        selectedFile:null,
+      });
+  }
+
     loadMessages(discussionId) {
       fetch('http://localhost:5000/api/discussion/' + discussionId, {
         method: 'GET',
@@ -58,7 +67,7 @@ class Message extends Component {
           },
         })
         .then(response => response.json())     
-        .then(json => this.setState({messages : json}));
+        .then(json => this.setState({messages : json}))
       }).catch(err => {
           console.log('err', err);
           alert("Serveur non disponible");
@@ -106,6 +115,8 @@ class Message extends Component {
         }).then(() => {
           let discussionId = this.props.match.params.id;
           this.loadMessages(discussionId);
+        }).then(()=> {
+          this.resetForm()
         }).catch(err => {
             console.log('err', err);
             alert("Serveur non disponible");
@@ -205,7 +216,11 @@ class Message extends Component {
             return response.json();
         }).then(() => {
           let discussionId = this.props.match.params.id;
+          this.setState({
+            showCommentEntry: false
+          });
           this.loadMessages(discussionId);
+          this.resetForm();
         }).catch(err => {
             console.log('err', err);
             alert("Serveur non disponible");
@@ -330,7 +345,7 @@ class Message extends Component {
                 <form className="Create-discussion" onSubmit={this.handleMessageSubmit}>
                   <label className="Create-label" for="title">Votre message : </label>
                   <input className="Create-input" type="text" id="title" value={this.state.value} onChange={this.handleMessageChange}/>
-                  <input className="Profil-modif" type="file" accept="image/png, image/jpeg, image/gif" onChange={this.handleFileChange}/>
+                  <input className="Profil-modif" type="file" accept="image/png, image/jpeg, image/gif" ref={ref=> this.fileInput = ref} onChange={this.handleFileChange}/>
                   <input className="Inscription-input Submit-form Submit-message" type="submit" value="Envoyer"/>
                 </form>
               </div>

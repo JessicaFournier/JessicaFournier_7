@@ -81,7 +81,6 @@ class Inscription extends React.Component {
                 },
                 body: data
             }).then((response) => {
-                console.log(response)
                 if (response.status === 200) {
                     this.setState({ redirection: true });
                 } else {

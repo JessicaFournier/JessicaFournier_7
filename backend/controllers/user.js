@@ -80,21 +80,24 @@ exports.login = (req, res, next) => {
         return res.status(500).json({error: "mysql"});
         } else if (result[0]) {
             const passwordBase = result[0].password.toString('utf-8');
-            bcrypt.compare(req.body.password, passwordBase)
-            .then(valid => {
-                if (!valid) {
+            bcrypt.compare(password, passwordBase)
+            .then(resultTest => {
+                if (resultTest == false) {
                     return res.status(401).json({ error: 'Mot de passe incorrect !' });
+                } else {
+                    return res.status(200).json({
+                        userId: result[0].id,
+                        token: jwt.sign(
+                        { userId: result[0].id,
+                            isAdmin: result[0].isAdmin  },
+                        'RANDOM_TOKEN_SECRET',
+                        { expiresIn: '1h' }
+                        )
+                    });
                 }
-            }) .catch(err => {})
-            return res.status(200).json({
-                userId: result[0].id,
-                token: jwt.sign(
-                  { userId: result[0].id,
-                    isAdmin: result[0].isAdmin  },
-                  'RANDOM_TOKEN_SECRET',
-                  { expiresIn: '1h' }
-                )
-            });
+            }) .catch(err => {
+                console.log(err)
+            })
         } else {
             return res.status(401).json({error: 'Utilisateur non trouvé !'});
         }

@@ -36,23 +36,27 @@ class Connexion extends React.Component {
         }
         e.preventDefault();
         fetch('http://localhost:5000/api/user/login', {
-                method: 'POST',
-                headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(objetPost)
-            }).then((response) => {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(objetPost)
+        }).then(async (response) => {
+            if (response.status === 200){
                 return response.json();
-            }).then((data) => {
-                localStorage.setItem("token", data.token);
-                localStorage.setItem("userId", data.userId);
-            }).then(() => {
-                this.setState({redirection: true});
-            }).catch(err => {
-                console.log('err', err);
-                alert("Serveur non disponible");
-            })
+            } else {
+                return Promise.reject(await response.json());
+            }
+        }).then((data) => {
+            localStorage.setItem("token", data.token);
+            localStorage.setItem("userId", data.userId);
+        }).then(() => {
+            this.setState({redirection: true});
+        }).catch(err => {
+            console.log('err', err);
+            alert(err.error);
+        })
     }
     
     render(){
