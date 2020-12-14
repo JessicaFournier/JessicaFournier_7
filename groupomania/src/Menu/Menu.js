@@ -38,7 +38,10 @@ class Menu extends Component {
                         <FontAwesomeIcon className=""  icon={faUser} />
                         <Link className="Menu-link" to="/Profil/">Mon profil</Link>
                     </div>
-                    <div className="Menu-logout" onClick={this.handleLogoutClick} >Deconnexion</div>
+                    <div className="Menu-button">
+                        <button className="Menu-logout" onClick={this.handleLogoutClick} >Deconnexion</button>
+                    </div>
+                    
                 </div>
             </div>
         );

@@ -44,6 +44,20 @@
     font-weight: bold;
 }
 
+.Submit-form:hover {
+    background-color: #fff;
+    color: #041333;
+    border: solid 2px #041333;
+    border-radius: 8px;
+}
+
+.Submit-form:focus {
+    background-color: #fff;
+    color: #041333;
+    border: solid 2px #041333;
+    border-radius: 8px;
+}
+
 @media screen and (max-width: 768px)
 {
     .Inscription-form {

@@ -15,7 +15,6 @@
     top: 0;
     left: 40px;
     margin:10px;
-    width: 170px;
 }
 
 .Message-date{
@@ -129,10 +128,15 @@
 .Message-text-p {
     margin-top: 30px;
 }
+
 @media screen and (max-width: 768px)
 {
     .Message-create-bloc {
         width: 330px;
+    }
+
+    .Message-text-p {
+        margin-top: 40px;
     }
 
     .Comment-bloc {
@@ -142,6 +146,10 @@
     .Comment-create {
         width: 330px;
         font-size: 15px;
+    }
+
+    .Message-autor{
+        width: 170px;
     }
 }
 

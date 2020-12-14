@@ -34,9 +34,20 @@
     font-size: 20px;
 }
 
+.Menu-logout:focus {
+    border: solid 2px #fff;
+    border-radius: 8px;
+    background-color: #041333;
+    color: #fff;
+}
+
 .Menu-iconLink {
-    margin-top: 30px;
-    
+    margin-top: 30px; 
+}
+
+.Menu-button {
+    margin: 0 auto;
+    text-align: center;
 }
 
 @media screen and (max-width: 768px)

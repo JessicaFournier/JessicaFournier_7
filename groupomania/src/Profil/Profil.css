@@ -64,6 +64,20 @@
     font-size: 20px;
 }
 
+.Profil-upload:focus {
+    border: solid 1px #041333;
+    border-radius: 8px;
+    background-color: #fff;
+    color: #041333;
+}
+
+.Profil-delete:focus {
+    border: solid 1px #041333;
+    border-radius: 8px;
+    background-color: #fff;
+    color: #041333;
+}
+
 @media screen and (max-width: 768px) 
 {
     .Page-bloc {
