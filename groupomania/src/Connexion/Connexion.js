@@ -1,9 +1,14 @@
 import React from 'react';
 import './Connexion.css'
 
-import { Redirect } from 'react-router-dom'
+import { Redirect } from 'react-router-dom';
+import Cookies from 'universal-cookie';
+
+const cookies = new Cookies();
 
 class Connexion extends React.Component {
+
+    
     constructor(props) {
         super(props);
         this.state = {
@@ -17,13 +22,13 @@ class Connexion extends React.Component {
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
-    handleEmailChange(event){
+    handleEmailChange(event) {
         this.setState({
             email: event.target.value
         });
     }
 
-    handlePasswordChange(event){
+    handlePasswordChange(event) {
         this.setState({
             password: event.target.value
         });
@@ -34,7 +39,9 @@ class Connexion extends React.Component {
             email: this.state.email,
             password: this.state.password,
         }
+
         e.preventDefault();
+
         fetch('http://localhost:5000/api/user/login', {
             method: 'POST',
             headers: {
@@ -43,34 +50,34 @@ class Connexion extends React.Component {
             },
             body: JSON.stringify(objetPost)
         }).then(async (response) => {
-            if (response.status === 200){
+            if (response.status === 200) {
                 return response.json();
             } else {
                 return Promise.reject(await response.json());
             }
         }).then((data) => {
-            localStorage.setItem("token", data.token);
-            localStorage.setItem("userId", data.userId);
-        }).then(() => {
-            this.setState({redirection: true});
+            cookies.set('token', data.token, { path: '/' });
+            cookies.set('userId', data.userId, { path: '/' });
+            
+            this.setState({ redirection: true });
         }).catch(err => {
             console.log('err', err);
             alert(err.error);
         })
     }
-    
-    render(){
-        const {redirection} = this.state;
+
+    render() {
+        const { redirection } = this.state;
         if (redirection) {
-            return <Redirect to='/Profil'/>;
+            return <Redirect to='/Profil' />;
         }
-        return(
+        return (
             <form className="Connect-form" onSubmit={this.handleSubmit}>
                 <label className="Inscription-label" for="email">Email : </label>
-                <input className="Inscription-input" type="email" id="email" value={this.state.value} onChange={this.handleEmailChange}/>
+                <input className="Inscription-input" type="email" id="email" value={this.state.value} onChange={this.handleEmailChange} />
                 <label className="Inscription-label" for="pass">Mot de passe : </label>
-                <input className="Inscription-input" type="password" id="pass" value={this.state.value} onChange={this.handlePasswordChange}/>
-                <input className="Inscription-input Submit-form" type="submit" value="Envoyer"/>
+                <input className="Inscription-input" type="password" id="pass" value={this.state.value} onChange={this.handlePasswordChange} />
+                <input className="Inscription-input Submit-form" type="submit" value="Envoyer" />
             </form>
         );
     }

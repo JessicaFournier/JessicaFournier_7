@@ -23,7 +23,7 @@ class Inscription extends React.Component {
     }
 
     resetForm() {
-        this.setState ({
+        this.setState({
             name: '',
             firstName: '',
             email: '',
@@ -38,20 +38,20 @@ class Inscription extends React.Component {
             name: event.target.value
         });
     }
-  
-    handleFirstNameChange(event){
+
+    handleFirstNameChange(event) {
         this.setState({
             firstName: event.target.value
         });
     }
 
-    handleEmailChange(event){
+    handleEmailChange(event) {
         this.setState({
             email: event.target.value
         });
     }
 
-    handlePasswordChange(event){
+    handlePasswordChange(event) {
         this.setState({
             password: event.target.value
         });
@@ -63,62 +63,61 @@ class Inscription extends React.Component {
     }
 
     handleSubmit(e) {
+        e.preventDefault();
+        
         const data = new FormData()
 
         if (this.state.selectedFile != null) {
             data.append('file', this.state.selectedFile)
         }
-        
+
         data.append('name', this.state.name)
         data.append('firstName', this.state.firstName)
         data.append('email', this.state.email)
         data.append('password', this.state.password)
-        
-        e.preventDefault();
+
         fetch('http://localhost:5000/api/user/signup', {
-                method: 'POST',
-                headers: {
-                },
-                body: data
-            }).then((response) => {
-                if (response.status === 200) {
-                    this.setState({ redirection: true });
-                } else {
-                    return response.json()  
-                }
-            }).then(json => {
-                alert(json.error);
-                this.resetForm(); 
-            }).catch(err => {
-                console.log('err', err);
-                alert("Serveur non disponible");
-            })
+            method: 'POST',
+            headers: {
+            },
+            body: data
+        }).then(async (response) => {
+            if (response.status === 200) {
+                this.setState({ redirection: true });
+            } else {
+                return Promise.reject(await response.json());
+            }
+        }).catch(err => {
+            console.log('err', err);
+            alert(err);
+            this.resetForm();
+        })
     }
-  
-    render(){
+
+    render() {
         const { redirection } = this.state;
         if (redirection) {
-            return <Redirect to='/Connexion'/>
+            return <Redirect to='/Connexion' />
         }
-        return(
+        return (
             <div className="Inscription">
                 <h2>Veuillez renseigner les champs suivants pour vous inscrire</h2>
                 <form onSubmit={this.handleSubmit}>
                     <div className="Inscription-form" >
                         <label className="Inscription-label" for="nom">Nom* : </label>
-                        <input className="Inscription-input" type="text" id="nom" value={this.state.name} onChange={this.handleNameChange} placeholder="Dupont"/>
+                        <input className="Inscription-input" type="text" id="nom" value={this.state.name} onChange={this.handleNameChange} placeholder="Dupont" />
                         <label className="Inscription-label" for="prenom">Prénom* : </label>
-                        <input className="Inscription-input" type="text" id="prenom" value={this.state.firstName} onChange={this.handleFirstNameChange} placeholder="Alain"/>
+                        <input className="Inscription-input" type="text" id="prenom" value={this.state.firstName} onChange={this.handleFirstNameChange} placeholder="Alain" />
                         <label className="Inscription-label" for="email">Email* : </label>
-                        <input className="Inscription-input" type="email" id="email" value={this.state.email} onChange={this.handleEmailChange} placeholder="alain.dupont@mail.com"/>
+                        <input className="Inscription-input" type="email" id="email" value={this.state.email} onChange={this.handleEmailChange} placeholder="alain.dupont@mail.com" />
                         <label className="Inscription-label" for="password">Mot de passe* : </label>
-                        <input className="Inscription-input" type="password" id="password" value={this.state.password} onChange={this.handlePasswordChange} placeholder="Entre 4 et 8 caractères, 1 majuscule, 1 minuscule, 1 chiffre"/>
+                        <input className="Inscription-input" type="password" id="password" value={this.state.password} onChange={this.handlePasswordChange} placeholder="Entre 4 et 8 caractères, 1 majuscule, 1 minuscule, 1 chiffre" />
                         <label className="Inscription-label" for="avatar">Photo de profil** : </label>
-                        <input className="Inscription-file" type="file" id="avatar" accept="image/png, image/jpeg"  onChange={this.handleFileChange}/>
+                        <input className="Inscription-file" type="file" id="avatar" accept="image/png, image/jpeg" onChange={this.handleFileChange} />
                         <p className="Inscription-request">* : champs obligatoires</p>
                         <p className="Inscription-request">** : fichiers acceptés : .jpeg et .png</p>
                     </div>
-                <input className="Inscription-input Submit-form" type="submit" value="Envoyer"/>
+                    <input className="Inscription-input Submit-form" type="submit" value="Envoyer" />
                 </form>
             </div>
         );

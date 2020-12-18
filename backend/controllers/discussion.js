@@ -369,9 +369,9 @@ exports.deleteComment = (req, res, next) => {
   const insertUserId = [userId];
   const isAdmin = req.userIsAdmin;
 
-  const queryStringUser = queryDbb.commentUserIdBeforeDelete();
+  const queryStringUser = queryDbb.commentSelectUserIdBeforeDelete();
   // On vérifie que l'utilisateur est celui qui a posté le commentaire ou qu'il est admin
-  connection.query(queryStringUser, insertUserId, (error, result, fields) => {
+  connection.query(queryStringUser, insertCommentId, (error, result, fields) => {
     if (error) {
       return res.status(500).json({ error: "mysql" });
     } else {
@@ -384,7 +384,7 @@ exports.deleteComment = (req, res, next) => {
           if (error) {
             return res.status(500).json({ error: "mysql" });
           } else {
-            return res.status(200).json("Commentaire supprimé");
+            return res.status(200).json({'message': "Commentaire supprimé"});
           }
         });
       }

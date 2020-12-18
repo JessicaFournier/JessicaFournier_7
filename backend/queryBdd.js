@@ -121,7 +121,7 @@ module.exports = {
     },
 
     //Vérification de l'utilisateur avant la suppression d'un message
-    commentUserIdBeforeDelete: function() {
+    commentSelectUserIdBeforeDelete: function() {
         return 'SELECT user_id FROM Comment WHERE id=?'
     },
 

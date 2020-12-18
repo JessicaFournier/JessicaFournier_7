@@ -10,6 +10,7 @@ import Discussion from './Discussion/Discussion.js'
 import Message from './Message/Message.js'
 
 function App() {
+
   return (
     <Router>
       <div className="App">
