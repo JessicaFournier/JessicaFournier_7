@@ -73,9 +73,9 @@ class Connexion extends React.Component {
         }
         return (
             <form className="Connect-form" onSubmit={this.handleSubmit}>
-                <label className="Inscription-label" for="email">Email : </label>
+                <label className="Inscription-label" htmlFor="email">Email : </label>
                 <input className="Inscription-input" type="email" id="email" value={this.state.value} onChange={this.handleEmailChange} />
-                <label className="Inscription-label" for="pass">Mot de passe : </label>
+                <label className="Inscription-label" htmlFor="pass">Mot de passe : </label>
                 <input className="Inscription-input" type="password" id="pass" value={this.state.value} onChange={this.handlePasswordChange} />
                 <input className="Inscription-input Submit-form" type="submit" value="Envoyer" />
             </form>

@@ -1,33 +1,35 @@
 
+const connection2 = require('./connexionDatabase2');
+
 module.exports = {
     //création d'un user
-    userCreate: function() {
-        return 'INSERT INTO User(name, firstName, email, password, photo) VALUES (?,?,?,?,?)'
+    userCreate: function(insert) {
+        return connection2.query('INSERT INTO User(name, firstName, email, password, photo) VALUES (?,?,?,?,?)', insert);
     },
 
     //vérification email unique
-    userEmailUnique: function() {
-        return 'SELECT email FROM User WHERE email = ?'
+    userEmailUnique: function(insertEMail) {
+        return connection2.query('SELECT email FROM User WHERE email = ?', insertEMail);
     },
 
     //récupération d'un utilisateur pour le login
-    userLogin: function() {
-        return 'SELECT * FROM User WHERE email = ? '
+    userLogin: function(insert) {
+        return connection2.query('SELECT * FROM User WHERE email = ? ', insert);
     },
 
     //récupération d'un utilisateur pour le profil
-    userProfil: function() {
-        return 'SELECT name, firstName, photo FROM User WHERE id=?'
+    userProfil: function(insert) {
+        return connection2.query('SELECT name, firstName, photo FROM User WHERE id=?', insert);
     },
 
     //mise à jour de la photo de profil
-    userProfilUpdate: function() {
-        return 'UPDATE User SET photo=? WHERE id=?'
+    userProfilUpdate: function(insert) {
+        return connection2.query('UPDATE User SET photo=? WHERE id=?', insert);
     },
 
     //récupération de la photo de profil
-    userProfilPhoto: function() {
-        return 'SELECT photo FROM User WHERE id = ?'
+    userProfilPhoto: function(insert) {
+        return connection2.query('SELECT photo FROM User WHERE id = ?', insert);
     },
 
     //supprime les commentaires liés à un utilisateur
@@ -41,43 +43,43 @@ module.exports = {
     },
 
     //supprime l'utilisateur
-    userDelete:function() {
-        return 'DELETE FROM User WHERE id=?'
+    userDelete:function(insert) {
+        return connection2.query('DELETE FROM User WHERE id=?', insert);
     },
 
     //creation de la discussion
-    discussionCreate: function() {
-        return 'INSERT INTO Discussion(user_id,title) VALUES (?,?)'
+    discussionCreate: function(insert) {
+        return connection2.query('INSERT INTO Discussion(user_id,title) VALUES (?,?)', insert);
     },
 
     // récupération de toutes les discussions
     discussionSelectAll: function() {
-        return 'SELECT title,id FROM Discussion'
+        return connection2.query('SELECT title,id FROM Discussion');
     },
 
     // récupération d'une discussion
-    discussionSelectOne: function() {
-        return 'SELECT title FROM Discussion WHERE id=?'
+    discussionSelectOne: function(insert) {
+        return connection2.query('SELECT title FROM Discussion WHERE id=?', insert);
     },
 
     // supression d'une discussion
-    discussionDelete: function() {
-        return 'DELETE FROM Discussion WHERE id=?'
+    discussionDelete: function(insertId) {
+        return connection2.query('DELETE FROM Discussion WHERE id=?', insertId);
     },
 
     //création d'un message
-    messageCreate: function() {
-        return 'INSERT INTO Message(user_id,discussion_id,text_message,date,file) VALUES (?,?,?,?,?)'
+    messageCreate: function(insert) {
+        return connection2.query('INSERT INTO Message(user_id,discussion_id,text_message,date,file) VALUES (?,?,?,?,?)', insert);
     },
 
     //récupération de tous les messages
-    messageSelectAll: function() {
-        return 'SELECT Message.text_message, User.name, User.firstName, User.photo, Discussion.title, Discussion.id, Message.date, Message.id, Message.file FROM Message INNER JOIN Discussion ON Message.discussion_id = Discussion.id INNER JOIN User ON Message.user_id = User.id WHERE Discussion.id = ? ORDER BY Message.date DESC' 
+    messageSelectAll: function(insert) {
+        return connection2.query('SELECT Message.text_message, User.name, User.firstName, User.photo, Discussion.title, Discussion.id, Message.date, Message.id, Message.file FROM Message INNER JOIN Discussion ON Message.discussion_id = Discussion.id INNER JOIN User ON Message.user_id = User.id WHERE Discussion.id = ? ORDER BY Message.date DESC', insert);
     },
 
     //supression d'un fichier à partir de l'id du message
-    fileDelete: function() {
-        return 'SELECT file FROM Message WHERE id=?'
+    fileDelete: function(insert) {
+        return connection2.query('SELECT file FROM Message WHERE id=?', insert);
     },
 
     //supression d'un fichier à partir de l'id du message
@@ -86,67 +88,67 @@ module.exports = {
     },
 
     //Vérification du userId avant de supprimer un message
-    messageUserIdBeforeDelete: function() {
-        return 'SELECT user_id FROM Message WHERE id=?'
+    messageUserIdBeforeDelete: function(insertMessageId) {
+        return connection2.query('SELECT user_id FROM Message WHERE id=?', insertMessageId);
     },
 
     //Supression d'un message
-    messageDelete: function() {
-        return 'DELETE FROM Message WHERE id=?'
+    messageDelete: function(insertMessageId) {
+        return connection2.query('DELETE FROM Message WHERE id=?', insertMessageId);
     },
 
     //suppression d'un commentaire a partir du message_id
-    commentDeleteMessageId: function() {
-        return 'DELETE FROM Comment WHERE message_id=?'
+    commentDeleteMessageId: function(insert) {
+        return connection2.query('DELETE FROM Comment WHERE message_id=?', insert);
     },
 
     //suppression d'un commentaire à partir de l'id du commentaire
-    commentDeleteCommentId: function() {
-        return 'DELETE FROM Comment WHERE id=?'
+    commentDeleteCommentId: function(insertCommentId) {
+        return connection2.query('DELETE FROM Comment WHERE id=?', insertCommentId);
     },
 
     //récupération d'un fichier
-    fileFind: function() {
-        return 'SELECT file FROM Message WHERE id = ?'
+    fileFind: function(insert) {
+        return connection2.query('SELECT file FROM Message WHERE id = ?', insert);
     },
 
     //création d'un commentaire sur un message
-    messageCommentCreate: function() {
-        return 'INSERT INTO Comment(user_id,message_id,text_comment,date_comment) VALUES (?,?,?,?)'
+    messageCommentCreate: function(insert) {
+        return connection2.query('INSERT INTO Comment(user_id,message_id,text_comment,date_comment) VALUES (?,?,?,?)', insert)
     },
 
     //récupération des commentaires pour un message
-    commentSelectAll: function() {
-        return 'SELECT Comment.text_comment, User.name, User.firstName, Comment.date_comment, Comment.message_id, Comment.id, User.photo FROM Comment INNER JOIN Message ON Comment.message_id = Message.id INNER JOIN User ON Comment.user_id = User.id WHERE Message.id = ? ORDER BY Comment.date_comment ASC'
+    commentSelectAll: function(insert) {
+        return connection2.query('SELECT Comment.text_comment, User.name, User.firstName, Comment.date_comment, Comment.message_id, Comment.id, User.photo FROM Comment INNER JOIN Message ON Comment.message_id = Message.id INNER JOIN User ON Comment.user_id = User.id WHERE Message.id = ? ORDER BY Comment.date_comment ASC', insert)
     },
 
     //Vérification de l'utilisateur avant la suppression d'un message
-    commentSelectUserIdBeforeDelete: function() {
-        return 'SELECT user_id FROM Comment WHERE id=?'
+    commentSelectUserIdBeforeDelete: function(insertCommentId) {
+        return connection2.query('SELECT user_id FROM Comment WHERE id=?', insertCommentId); 
     },
 
     //insertion d'un utilisateur qui aime un message
-    messageLike: function() {
-        return 'INSERT INTO Liked(user_id, message_id, liked_date) VALUES(?, ?, ?)'
+    messageLike: function(insertFirst) {
+        return connection2.query('INSERT INTO Liked(user_id, message_id, liked_date) VALUES(?, ?, ?)', insertFirst);
     },
 
     //Compte le nombre d elike pour un message
-    messageNbLike: function() {
-        return 'SELECT COUNT(*) AS nb_like FROM Liked WHERE message_id = ?'
+    messageNbLike: function(insert2) {
+        return connection2.query('SELECT COUNT(*) AS nb_like FROM Liked WHERE message_id = ?', insert2);
     },
 
     //Selectionne l'id de l'utilisateur qui aime un message
-    messageUserLike: function() {
-        return 'SELECT user_id FROM Liked WHERE message_id = ?'
+    messageUserLike: function(insertMessageId) {
+        return connection2.query('SELECT user_id FROM Liked WHERE message_id = ?',insertMessageId);
     },
 
-    messageUserDislike:function() {
-        return 'DELETE FROM Liked WHERE user_id=? AND message_id= ?'
+    messageUserDislike:function(insertForDelete) {
+        return connection2.query('DELETE FROM Liked WHERE user_id=? AND message_id= ?', insertForDelete);
     },
 
     //Supression des likes pour un message_id
-    messageDeleteLike: function() {
-        return 'DELETE FROM Liked WHERE message_id=?'
+    messageDeleteLike: function(insertMessageId) {
+        return connection2.query('DELETE FROM Liked WHERE message_id=?', insertMessageId);
     },
 
     //Suppression des likes lors de la supression du profil
@@ -155,23 +157,23 @@ module.exports = {
     },
 
     //Sélection des id de messages en fonction de la discussion
-    selectMessageForDiscussionDelete: function() {
-        return 'SELECT id FROM Message WHERE discussion_id = ?'
+    selectMessageForDiscussionDelete: function(insertId) {
+        return connection2.query('SELECT id FROM Message WHERE discussion_id = ?', insertId);
     },
 
-    discussionDeleteMessage: function() {
-        return 'DELETE FROM Message WHERE discussion_id = ?'
+    discussionDeleteMessage: function(insertId) {
+        return connection2.query('DELETE FROM Message WHERE discussion_id = ?', insertId);
     },
 
-    discussionDeleteLikeMessage:function () {
-        return 'DELETE FROM Liked WHERE message_id= ?'
+    discussionDeleteLikeMessage:function (insert) {
+        return connection2.query('DELETE FROM Liked WHERE message_id= ?', insert);
     },
 
-    fileMessageDeleteUser: function () {
-        return 'SELECT file FROM Message WHERE user_id = ?'
+    fileMessageDeleteUser: function (insert) {
+        return connection2.query('SELECT file FROM Message WHERE user_id = ?', insert);
     },
 
-    selectIdFromUser: function() {
-        return 'SELECT id FROM User WHERE id=?'
+    selectIdFromUser: function(insert) {
+        return connection2.query('SELECT id FROM User WHERE id=?', insert);
     },
 }

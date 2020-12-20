@@ -85,11 +85,16 @@ class Discussion extends Component {
                 'Authorization': 'Bearer ' + cookies.get('token')
             },
             body: JSON.stringify(objetPost)
-        }).then(() => {
-            this.loadDiscussions();
+        }).then(async (response) => {
+            if (response.status === 200) {
+                this.loadDiscussions();
+            } else {
+                return Promise.reject(await response.json());
+            }
         }).catch(err => {
             console.log('err', err);
-            alert("Serveur non disponible");
+            alert(err.error);
+            this.loadDiscussions();
         })
     }
 

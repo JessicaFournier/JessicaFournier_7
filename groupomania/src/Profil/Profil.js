@@ -22,6 +22,10 @@ class Profil extends Component {
         this.handleDeleteProfileClick = this.handleDeleteProfileClick.bind(this);
     }
 
+    resetForm() {
+        this.fileInput.value = "";
+    }
+
     loadProfil() {
         getProfile()
             .then(response => response.json())
@@ -51,6 +55,7 @@ class Profil extends Component {
 
         putProfile(id, data).then(() => {
             this.loadProfil();
+            this.resetForm();
         }).catch(err => {
             console.log('err', err);
             alert("Serveur non disponible");
@@ -71,7 +76,8 @@ class Profil extends Component {
 
         deleteProfile(id, data)
             .then(() => {
-                localStorage.clear();
+                cookies.remove('token');
+                cookies.remove('userId');
                 this.setState({ redirection: true })
                 alert('Profil supprimé')
             }).catch(err => {
@@ -98,7 +104,7 @@ class Profil extends Component {
                         <div className="Profil-img">
                             <img src={photo} className="Photo-profil" alt="profil" />
                             <div>
-                                <input className="Profil-modif" type="file" accept="image/png, image/jpeg" onChange={this.handleFileChange} />
+                                <input className="Profil-modif" type="file" accept="image/png, image/jpeg" ref={ref => this.fileInput = ref} onChange={this.handleFileChange} />
                                 <button className="Profil-upload" onClick={this.handleUploadFileClick}>Upload</button>
                             </div>
                         </div>

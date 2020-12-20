@@ -1,10 +1,13 @@
 import React, { Component } from 'react'
+import Cookies from 'universal-cookie'
 import { Link, Redirect } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faUser } from '@fortawesome/free-solid-svg-icons'
 import { faComments } from '@fortawesome/free-solid-svg-icons'
 
 import './Menu.css'
+
+const cookies = new Cookies();
 
 class Menu extends Component {
     constructor(props) {
@@ -17,7 +20,8 @@ class Menu extends Component {
     }
 
     handleLogoutClick() {
-        localStorage.clear();
+        cookies.remove('token');
+        cookies.remove('userId');
         this.setState({ redirection: true });
     }
 

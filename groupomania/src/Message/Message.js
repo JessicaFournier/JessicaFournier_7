@@ -135,7 +135,7 @@ class Message extends Component {
             .then(function (response) {
                 return response.json();
             }).then(function (response) {
-                alert(response);
+                alert(response.message);
             }).then(() => {
                 let discussionId = this.props.match.params.id;
                 this.loadMessages(discussionId);
@@ -177,6 +177,7 @@ class Message extends Component {
      * @param {*} firstName 
      */
     handleCommentClick(id, name, firstName) {
+        this.loadComments(id);
         this.setState({
             showCommentEntry: true,
             messageId: id,
