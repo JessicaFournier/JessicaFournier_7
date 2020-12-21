@@ -12,5 +12,5 @@ Le server se trouve dans le dossier backend. Le frontend est le dossier groupoma
 - DB_USER = votre identifiant
 - DB_PASS = votre mot de passe
  3. dans le dossier backend : 
-      1. npm install
-      2. node server
+- npm install
+- node server
