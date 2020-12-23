@@ -3,21 +3,6 @@ CREATE DATABASE `groupomania`;
 USE `groupomania`;
 
 --
--- Table structure for table `Discussion`
---
-
-DROP TABLE IF EXISTS `Discussion`;
-
-CREATE TABLE `Discussion` (
-  `id` smallint unsigned NOT NULL AUTO_INCREMENT,
-  `user_id` smallint unsigned NOT NULL,
-  `title` text NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `fk_user_id_discussion` (`user_id`),
-  CONSTRAINT `fk_user_id_discussion` FOREIGN KEY (`user_id`) REFERENCES `User` (`id`) ON DELETE CASCADE ON UPDATE RESTRICT
-) ENGINE=InnoDB AUTO_INCREMENT=34 DEFAULT CHARSET=utf8;
-
---
 -- Table structure for table `User`
 --
 
