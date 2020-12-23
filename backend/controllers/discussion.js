@@ -152,7 +152,6 @@ exports.deleteMessage = async (req, res, next) => {
 
     return res.status(200).json({"message": "Message supprimé"});
   } catch (err) {
-    console.log(err);
     return res.status(500).json({ error: "mysql" });
   }
     
@@ -171,12 +170,10 @@ exports.likeMessage = async (req, res, next) => {
   //on va vérifier si l'utilisateur a déjà aimé le message
   try {
       //Si l'utilisateur a déjà aimé le like, on le supprime de la base
-      if (resultUser[0].user_id == userId) {
-        console.log("resultUser0", resultUser[0].userId)
+      if (resultUser.length > 0 && resultUser[0].user_id == userId) {
         await queryDbb.messageUserDislike(insertForDelete);
         return res.status(200).json({message: "Like supprimé de la base"});
       } else {
-      console.log('test')
         //si non on l'ajoute à la base
         const result = await queryDbb.messageLike(insertFirst);
         return res.status(200).json(result);
